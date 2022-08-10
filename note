@@ -1,0 +1,25 @@
+kaggle grande aiuto nella costruzione del modello
+
+
+https://www.kaggle.com/code/vincee/intel-image-classification-cnn-keras/notebook
+
+
+Aumentando la complessità della rete si peggiorano i risultati finali.
+
+nuova prova
+cambiato :
+history = model.fit(train_images, train_labels, batch_size=128, epochs=16, validation_split = 0.2)
+a:
+history = model.fit(train_images, train_labels, batch_size=256, epochs=32, validation_split = 0.2)
+
+
+
+
+
+altre repo simili:
+https://github.com/ahmetcankaraoglan/Mnist-Model-Deployment
+
+https://github.com/tamlthari/dogvscatCNN-classifier
+
+
+
