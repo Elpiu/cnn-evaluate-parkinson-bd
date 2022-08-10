@@ -1,2 +1,0 @@
-# NeuralNetwors
- Tirocinio
