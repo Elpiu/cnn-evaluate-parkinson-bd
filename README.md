@@ -60,6 +60,20 @@ nella cartella 'webService/static/models'.
 
 ---
 
+## Run with GPU
+
+Cambiare nel file requirments.txt
+
+```
+from ---> tensorflow-cpu==2.9.1
+
+to ---> tensorflow==2.9.1
+```
+
+se si posside una GPU, il modulo tensorflow-cpu è stato utilizzato per il deploy su Heroku.
+
+---
+
 # Contenuti
 
 <div>
