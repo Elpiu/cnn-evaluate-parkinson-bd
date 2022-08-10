@@ -1,2 +1,2 @@
 
-web: gunicorn --pythonpath webService app
+web: gunicorn --pythonpath webService app:app
