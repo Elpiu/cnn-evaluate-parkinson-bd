@@ -80,7 +80,7 @@ Alcuni requirments sono stati rimossi per diminuire il peso della build.
 
 <div>
 <p float="left">
-  <img src="\images_repo\Classifier-parkinson-disease.png" width="200" /> 
-  <img src="\images_repo\Classifier2.png" width="200" />
+  <img src=".\images_repo\Classifier-parkinson-disease.png" width="200" /> 
+  <img src=".\images_repo\Classifier2.png" width="200" />
 </p>
 </div>
