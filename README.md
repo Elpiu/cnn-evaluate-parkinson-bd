@@ -40,23 +40,10 @@ Per far funzionare il progetto in locale bisogna installare tutti i moduli requi
 pip install -r requirements.txt
 ```
 
-Spostarsi nella cartella 'webService' e lanciare l'app flask.
-
-```
-cd .\webService\
-flask run
-```
-
-### Cambiare modello
-
-Per cambiare il modello basta sostituire il file '.h5' presente
-nella cartella 'webService/static/models'.
-
----
 
 ### Hosted by Heroku
 
-[Link al sito da fare]()
+[Link al sito](https://app-cnn-flask.herokuapp.com/)
 
 ---
 
