@@ -9,7 +9,7 @@ import tensorflow as tf
 from tqdm import tqdm
 import pandas as pd
 
-pathPred = "C:\\Users\\elpid\Desktop\\DataSetNew\\converted\\d\\seg_pred"
+#pathPred = "C:\\Users\\elpid\Desktop\\DataSetNew\\converted\\d\\seg_pred"
 pathTest = "C:\\Users\\elpid\\Desktop\\DataSetNew\\converted\\d\\seg_test"
 pathTrain = "C:\\Users\\elpid\\Desktop\\DataSetNew\\converted\\d\\seg_train"
 def load_data(seg_trainPath, seg_testPath):
@@ -105,7 +105,9 @@ def plot_accuracy_loss(history):
 
 
 
-class_names = ['1', '2', '3', '4', '5']
+#class_names = ['1', '2', '3', '4', '5']
+class_names = ['1', '2', '3', '4']
+
 class_names_label = {class_name:i for i, class_name in enumerate(class_names)}
 
 nb_classes = len(class_names)
@@ -138,57 +140,63 @@ test_images = test_images / 255.0
 #display_random_image(class_names, train_images, train_labels)
 display_examples(class_names, train_images, train_labels)
 
-"""
-model = tf.keras.Sequential([
-    tf.keras.layers.Conv2D(32, (3, 3), activation = 'relu', input_shape = (150, 150, 3)),
-    tf.keras.layers.MaxPooling2D(2,2),
-    tf.keras.layers.Conv2D(32, (3, 3), activation = 'relu'),
-    tf.keras.layers.MaxPooling2D(2,2),
-    tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(128, activation=tf.nn.relu),
-    tf.keras.layers.Dense(5, activation=tf.nn.softmax)
-])
-"""
 
 model = tf.keras.Sequential([
-    tf.keras.layers.Conv2D(32, (3, 3), activation = 'relu', input_shape = (150, 150, 3)),
-    tf.keras.layers.MaxPooling2D(2,2),
-    tf.keras.layers.Conv2D(16, (3, 3), activation = 'relu'),
-    tf.keras.layers.MaxPooling2D(2,2),
+    #Layer convoluzionale 2D
+    tf.keras.layers.Conv2D(
+        #Numero di filtri per lo strato convoluzionale (dimensione dell'output)
+        filters=32,
+        #Specifica l'altezza e la lunghezza della finestra dello strato 2D
+        kernel_size= (3, 3),
+        #Padding disattivato, inoltre strodes non presenti
+        padding= "valid",
+        # Funzione di attivazione
+        activation = 'relu',
+        #Dimensione dell'input
+        input_shape = (150, 150, 3)
+    ),
+    tf.keras.layers.Dropout(0.2),
 
+    #Layer di max pooling
+    tf.keras.layers.MaxPooling2D(
+        #Dimensione Finestra dove prendere il massimo
+        pool_size= (2,2),
+        #Finestra di spostamento per ogni pooling step
+        strides= (2,2),
+    ),
+    tf.keras.layers.Conv2D(
+        filters=32,
+        kernel_size=(3, 3),
+        padding="valid",
+        activation='relu'
+    ),
+    tf.keras.layers.MaxPooling2D(
+        pool_size=(2, 2),
+        strides=(2, 2),
+    ),
+    # Layer di appiattimento
     tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(64, activation=tf.nn.relu),
-    tf.keras.layers.Dense(16, activation=tf.nn.relu),
-    tf.keras.layers.Dense(5, activation=tf.nn.softmax)
+    # Layer di attivazion
+    tf.keras.layers.Dense(
+        #Dimensione dello spazio d'output
+        units=128,
+        #Funzione di attivazione
+        activation='relu'
+    ),
+    tf.keras.layers.Dense(
+        units=4,
+        activation='softmax'
+    )
 ])
-"""
-from keras.layers import *
-model = tf.keras.models.Sequential()
-model.add(Conv2D(filters=256, kernel_size=3, activation = 'relu', input_shape = (150, 150, 3)))
-model.add(MaxPool2D(pool_size=2, strides=2))
 
-model.add(Conv2D(filters=128, kernel_size=3, activation = 'relu'))
-model.add(MaxPool2D(2,2))
 
-model.add(Conv2D(filters=64, kernel_size=3, activation = 'relu'))
-model.add(MaxPool2D(2,2))
-
-model.add(Conv2D(filters=32, kernel_size=3, activation = 'relu'))
-model.add(MaxPool2D(2,2))
-
-model.add(Flatten())
-
-model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(5, activation='softmax'))
-"""
 
 
 # Display the model's architecture
 model.summary()
 
 model.compile(optimizer = 'adam', loss = 'sparse_categorical_crossentropy', metrics=['accuracy'])
-history = model.fit(train_images, train_labels, batch_size=128, epochs=64, validation_split = 0.2)
+history = model.fit(train_images, train_labels, batch_size=64, epochs=24, validation_split = 0.2)
 
 plot_accuracy_loss(history)
 
@@ -209,7 +217,8 @@ ax.set_title('Confusion matrix')
 plt.show()
 
 
-#model.save("saved_model/my_model2.h5")
+model.save("saved_model/my_model.h5")
+
 
 #Loss troppo alto, buona accuratezza.
 

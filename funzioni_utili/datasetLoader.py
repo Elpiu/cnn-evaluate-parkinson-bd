@@ -66,6 +66,7 @@ def loadDataset(directoryPath):
     #Lista delle directory dei pazienti
     items = os.listdir(directoryPath)
     items.remove("Score.xlsx")
+    items.remove("d")
 
 
     #Prendi i dati dei pazienti
@@ -99,8 +100,10 @@ def loadDataset(directoryPath):
     #Prendiamo ultima colonna degli score finai
     #Si è selezionato min 33% 50% 66% max
     #Per le classi di gravità del Parkinson
-    fiveClass = fiveClassScore(dataFrameScore["V15"])
-    print(fr"Le cinque classi selezionate da describe:  {fiveClass}")
+    #classSc = fiveClassScore(dataFrameScore["V15"])
+    classSc = foureClassScore(dataFrameScore["V15"])
+
+    print(fr"Le cinque classi selezionate da describe:  {classSc}")
     print(tokenConsole)
 
     # Costruito il nuovo dataframe con featur "sex","age","score","imageData"
@@ -108,61 +111,70 @@ def loadDataset(directoryPath):
     print(fr"Numero di dati ottenuti: {len(finalDataFrame)}")
 
     #Da commentare se si è gia diviso il dataset
-    #crea_tre_parti_dataset(directoryPath, finalDataFrame, fiveClass)
+    fiveClass = DivisionClasses(classSc)
+    crea_dataset_partizionato(directoryPath, finalDataFrame,
+                              fiveClass
+                              , sizeTrain=80)
     print("Inserimeto finito!")
 
 
+class DivisionClasses:
+    def __init__(self, listScoreDivision):
+        self.listaScoreDivision = listScoreDivision
+    def getClassByScore(self, score):
+        current= 1
+        for levelScore in self.listaScoreDivision:
+            if(score > levelScore):
+                current+=1
+            else: return str(current)
+        return str(len(self.listaScoreDivision))
 
-def crea_tre_parti_dataset(directoryPath, finalDataFrame, fiveClass):
+    def getNumberOfClass(self):
+        return len(self.listaScoreDivision)
+
+
+def crea_dataset_partizionato(directoryPath, finalDataFrame, divisionClass: DivisionClasses, sizeTrain: float =80):
     #####Creazione della struttura del DatasetFinale#####
     directoryPath += "/d"
     os.mkdir(directoryPath)
 
-    dirPred = directoryPath + "/seg_pred"
     dirTest = directoryPath + "/seg_test"
     dirTrain = directoryPath + "/seg_train"
 
-    os.mkdir(dirPred)
     os.mkdir(dirTest)
     os.mkdir(dirTrain)
 
-    subFolders = ["1", "2", "3", "4", "5"]
+    subFolders = [str(x) for x in list(range(1, divisionClass.getNumberOfClass()+1))  ]
+
     for i in subFolders: os.mkdir(dirTest + "/" + i)
     for i in subFolders: os.mkdir(dirTrain + "/" + i)
     #######################################################
     #####Inserimento delle immagini
     import shutil
     import random
-    percentage_test = 0.25  # percentuale di composizione del test
-    percentage_train = 0.65  # percentuale di composizione del train
-    percentage_pred = 0.10  # percentuale per la validazione
+
+    #Percentuale di composizione del train
+    percentage_train = sizeTrain/100
+    #Percentuale di composizione del test
+    percentage_test = ((100 - sizeTrain)/100)
+    #Genera nomi casuali
     rName = randomword
     listPath, listScore = finalDataFrame['Directory ID'], finalDataFrame['ScoreVisit']
 
     for (path, score) in zip(listPath, listScore):
-        # A seconda dello score cambia la destinazione
-        path_destination = ""
-        if (score <= fiveClass[0]):
-            path_destination = "1"
-        elif (score <= fiveClass[1]):
-            path_destination = "2"
-        elif (score <= fiveClass[2]):
-            path_destination = "3"
-        elif (score <= fiveClass[3]):
-            path_destination = "4"
-        else:
-            path_destination = "5"
+        path_destination = divisionClass.getClassByScore(score)
+
         # Prendi tutte le immagini
         files = os.listdir(path)
         for fname in files:
             # Metti nella cartella del train
             val = random.random()
-            if val > percentage_train:
+            if val < percentage_train:
                 shutil.copy2(os.path.join(path, fname), dirTrain + "/" + path_destination + "/" + rName() + ".png")
-            elif val > percentage_test:
-                shutil.copy2(os.path.join(path, fname), dirTest + "/" + path_destination + "/" + rName() + ".png")
+            # Metti nella cartella del test
             else:
-                shutil.copy2(os.path.join(path, fname), dirPred + "/" + rName() + ".png")
+                shutil.copy2(os.path.join(path, fname), dirTest + "/" + path_destination + "/" + rName() + ".png")
+
     #######################################################
 
 import random, string

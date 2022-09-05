@@ -1,0 +1,185 @@
+110/110 [==============================] - 44s 396ms/step - loss: 0.0013 - accuracy: 0.9999 - val_loss: 0.3404 - val_accuracy: 0.9273
+Epoch 24/24
+110/110 [==============================] - 45s 408ms/step - loss: 8.8425e-04 - accuracy: 0.9999 - val_loss: 0.3530 - val_accuracy: 0.9262
+70/70 [==============================] - 3s 40ms/step - loss: 0.3632 - accuracy: 0.9176
+70/70 [==============================] - 3s 38ms/step
+
+model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(32, (3, 3), activation = 'relu', input_shape = (150, 150, 3)),
+    tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.Conv2D(16, (3, 3), activation = 'relu'),
+    tf.keras.layers.MaxPooling2D(2,2),
+
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(64, activation=tf.nn.relu),
+    tf.keras.layers.Dense(16, activation=tf.nn.relu),
+    tf.keras.layers.Dense(4, activation=tf.nn.softmax)
+])
+
+1
+*************************************************************************************************************************************************************
+Epoch 12/12
+437/437 [==============================] - 188s 430ms/step - loss: 0.0324 - accuracy: 0.9914 - mae: 1.0069 - val_loss: 0.1964 - val_accuracy: 0.9371 - val_mae: 1.0140
+70/70 [==============================] - 6s 82ms/step - loss: 0.2128 - accuracy: 0.9312 - mae: 1.0057
+
+
+same model after 64 epochs
+Epoch 60/64
+437/437 [==============================] - 185s 424ms/step - loss: 0.0033 - accuracy: 0.9990 - mae: 1.0069 - val_loss: 0.2941 - val_accuracy: 0.9462 - val_mae: 1.0140
+Epoch 61/64
+437/437 [==============================] - 188s 429ms/step - loss: 0.0094 - accuracy: 0.9971 - mae: 1.0069 - val_loss: 0.4432 - val_accuracy: 0.9319 - val_mae: 1.0140
+Epoch 62/64
+437/437 [==============================] - 185s 423ms/step - loss: 0.0096 - accuracy: 0.9976 - mae: 1.0069 - val_loss: 0.3183 - val_accuracy: 0.9468 - val_mae: 1.0140
+Epoch 63/64
+437/437 [==============================] - 186s 426ms/step - loss: 0.0010 - accuracy: 0.9999 - mae: 1.0069 - val_loss: 0.3308 - val_accuracy: 0.9479 - val_mae: 1.0140
+Epoch 64/64
+437/437 [==============================] - 191s 437ms/step - loss: 0.0037 - accuracy: 0.9989 - mae: 1.0069 - val_loss: 0.4517 - val_accuracy: 0.9365 - val_mae: 1.0140
+70/70 [==============================] - 6s 86ms/step - loss: 0.4300 - accuracy: 0.9380 - mae: 1.0057
+70/70 [==============================] - 6s 82ms/step
+
+
+model = tf.keras.Sequential([
+    #Layer convoluzionale 2D
+    tf.keras.layers.Conv2D(
+        #Numero di filtri per lo strato convoluzionale (dimensione dell'output)
+        filters=64,
+        #Specifica l'altezza e la lunghezza della finestra dello strato 2D
+        kernel_size= (3, 3),
+        #Padding disattivato, inoltre strodes non presenti
+        padding= "valid",
+        # Funzione di attivazione
+        activation = 'relu',
+        #Dimensione dell'input
+        input_shape = (150, 150, 3)
+    ),
+    tf.keras.layers.Dropout(0.2),
+
+    #Layer di max pooling
+    tf.keras.layers.MaxPooling2D(
+        #Dimensione Finestra dove prendere il massimo
+        pool_size= (2,2),
+        #Finestra di spostamento per ogni pooling step
+        strides= (2,2),
+    ),
+    tf.keras.layers.Conv2D(
+        filters=32,
+        kernel_size=(3, 3),
+        padding="valid",
+        activation='relu'
+    ),
+    tf.keras.layers.Dropout(0.2),
+
+    tf.keras.layers.Conv2D(
+        filters=16,
+        kernel_size=(3, 3),
+        padding="valid",
+        activation='relu'
+    ),
+
+    tf.keras.layers.MaxPooling2D(
+        pool_size=(2, 2),
+        strides=(2, 2),
+    ),
+    # Layer di appiattimento
+    tf.keras.layers.Flatten(),
+    # Layer di attivazion
+    tf.keras.layers.Dense(
+        #Dimensione dello spazio d'output
+        units=128,
+        #Funzione di attivazione
+        activation='relu'
+    ),
+    tf.keras.layers.Dense(
+        units=4,
+        activation='softmax'
+    )
+])
+2
+*************************************************************************************************************************************************************
+110/110 [==============================] - 44s 404ms/step - loss: 2.1128e-04 - accuracy: 1.0000 - val_loss: 0.2703 - val_accuracy: 0.9382
+Epoch 24/24
+110/110 [==============================] - 45s 406ms/step - loss: 1.5811e-04 - accuracy: 1.0000 - val_loss: 0.2729 - val_accuracy: 0.9382
+70/70 [==============================] - 3s 44ms/step - loss: 0.2408 - accuracy: 0.9398
+70/70 [==============================] - 3s 43ms/step
+
+
+model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(32, (3, 3), activation = 'relu', input_shape = (150, 150, 3)),
+    tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.Conv2D(32, (3, 3), activation = 'relu'),
+    tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation=tf.nn.relu),
+    tf.keras.layers.Dense(4, activation=tf.nn.softmax)
+])
+
+3
+*************************************************************************************************************************************************************
+110/110 [==============================] - 84s 763ms/step - loss: 0.0080 - accuracy: 0.9979 - val_loss: 0.2342 - val_accuracy: 0.9308
+Epoch 24/24
+110/110 [==============================] - 80s 724ms/step - loss: 0.0017 - accuracy: 1.0000 - val_loss: 0.2241 - val_accuracy: 0.9354
+70/70 [==============================] - 3s 47ms/step - loss: 0.2094 - accuracy: 0.9407
+70/70 [==============================] - 3s 44ms/step
+
+
+model = tf.keras.Sequential([
+    #Layer convoluzionale 2D
+    tf.keras.layers.Conv2D(
+        #Numero di filtri per lo strato convoluzionale (dimensione dell'output)
+        filters=32,
+        #Specifica l'altezza e la lunghezza della finestra dello strato 2D
+        kernel_size= (3, 3),
+        #Padding disattivato, inoltre strodes non presenti
+        padding= "valid",
+        # Funzione di attivazione
+        activation = 'relu',
+        #Dimensione dell'input
+        input_shape = (150, 150, 3)
+    ),
+    tf.keras.layers.Dropout(0.2),
+
+    #Layer di max pooling
+    tf.keras.layers.MaxPooling2D(
+        #Dimensione Finestra dove prendere il massimo
+        pool_size= (2,2),
+        #Finestra di spostamento per ogni pooling step
+        strides= (2,2),
+    ),
+    tf.keras.layers.Conv2D(
+        filters=32,
+        kernel_size=(3, 3),
+        padding="valid",
+        activation='relu'
+    ),
+    tf.keras.layers.MaxPooling2D(
+        pool_size=(2, 2),
+        strides=(2, 2),
+    ),
+    # Layer di appiattimento
+    tf.keras.layers.Flatten(),
+    # Layer di attivazion
+    tf.keras.layers.Dense(
+        #Dimensione dello spazio d'output
+        units=128,
+        #Funzione di attivazione
+        activation='relu'
+    ),
+    tf.keras.layers.Dense(
+        units=4,
+        activation='softmax'
+    )
+])
+
+4
+*************************************************************************************************************************************************************
+
+
+
+
+
+
+
+
+
+
+

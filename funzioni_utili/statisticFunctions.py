@@ -1,12 +1,23 @@
 
-
+def foureClassScore(columnScore):
+    frequenzeScore = columnScore.describe(percentiles=[.36, .81])
+    # Si è selezionato min 36% 81% max
+    # Per le classi di gravità del Parkinson
+    five_class_score = [frequenzeScore['min'],
+                        frequenzeScore['36%'],
+                        frequenzeScore['81%'],
+                        frequenzeScore['max']]
+    return five_class_score
 
 def fiveClassScore(columnScore):
     frequenzeScore = columnScore.describe(percentiles=[.33, .66, .100])
     # Si è selezionato min 33% 50% 66% max
     # Per le classi di gravità del Parkinson
     five_class_score = [frequenzeScore['min'],
-                        frequenzeScore['33%'], frequenzeScore['50%'], frequenzeScore['66%'], frequenzeScore['max']]
+                        frequenzeScore['33%'],
+                        frequenzeScore['50%'],
+                        frequenzeScore['66%'],
+                        frequenzeScore['max']]
     return five_class_score
 
 def countMaleAndFemaleInDataset(dataFrame):
