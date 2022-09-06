@@ -239,7 +239,8 @@ loss = tf.keras.losses.SparseCategoricalCrossentropy(
 #Compilazione del modello
 model.compile(optimizer = opt, loss = loss,
               metrics=['accuracy', #precisione del mdoello
-                       'mae' #Mean Absolut error, metrica di regressione, indica la media della somma tra il valore effettivo e quello previsto.
+                       'mae', #Mean Absolut error, metrica di regressione, indica la media della somma tra il valore effettivo e quello previsto.
+                       'mse' #Mean square error
                     ])
 #Addestra il modello, history è un record dei valori di perdita di addestramento e dei valori delle metriche
 history = model.fit(train_images, train_labels,
@@ -272,7 +273,7 @@ ax.set_title('Confusion matrix')
 plt.show()
 
 
-model.save("saved_model/my_model.h5")
+model.save("saved_model/my_model2.h5")
 
 #https://stephenallwright.com/cross_val_score-sklearn/
 #cross_val_score in Python
