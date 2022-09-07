@@ -274,10 +274,3 @@ plt.show()
 
 
 model.save("saved_model/my_model2.h5")
-
-#https://stephenallwright.com/cross_val_score-sklearn/
-#cross_val_score in Python
-#scores = cross_val_score(model, X, y, cv=5, scoring='neg_root_mean_squared_error')
-
-#print("Mean score of %0.2f with a standard deviation of %0.2f" % (scores.mean(), scores.std()))
-

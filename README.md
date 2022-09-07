@@ -4,10 +4,12 @@
 morbo di Parkinson mediante modello
 di rete neurale convoluzionale**
 
-Candidato: Elpidio Mazza
+Candidato:
+* Elpidio Mazza
 
-Relatore: Prof. Rita Francese
-
+Relatore: 
+* Prof. Rita Francese
+* Dott.ssa Maria Frasca
 ---
 
 ### **UNIVERSITÀ DEGLI STUDI DI SALERNO**
@@ -22,13 +24,19 @@ Relatore: Prof. Rita Francese
 
 ### Dataset
 
-    #TODO
+Numero di esempi per il training: 8740
+NUmero di esempi per il test: 2210
+Ogni immagine è di dimensione (150, 150)
+
+![](images_repo/Figure_last_divisone_4_classi_numero_esempi.png)
+
 
 ---
 
 ### CNN
 
-    #TODO
+![](images_repo/modelSummary.jpg)
+
 
 ---
 
